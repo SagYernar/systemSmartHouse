@@ -12,9 +12,6 @@ namespace SystemSmartHouse
         {
             IMenu menu = new Menu();
 
-            IResource resurce = new ServiceResource();
-
-            IController controller = new ServiceController();
         }
     }
 }

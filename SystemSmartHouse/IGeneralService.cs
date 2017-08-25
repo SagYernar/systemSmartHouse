@@ -5,11 +5,11 @@
         int NumberOfService { get; set; }
         GeneralService RegistryService();
         void DeleteService();
-        ServiceController Controller
+        IController Controller
         {
             get;
         }
-        ServiceResource Resource
+        IServiceResource Resource
         {
             get;
         }

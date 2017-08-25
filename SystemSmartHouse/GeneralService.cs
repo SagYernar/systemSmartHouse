@@ -6,16 +6,16 @@ namespace SystemSmartHouse
     {
         public int NumberOfService { get; set; }
 
-        ServiceController controller;
-        ServiceResource resource;
-        public ServiceController Controller {
+        IController controller;
+        IServiceResource resource;
+        public IController Controller {
             get
             {
                 return controller;
             }
         }
 
-        public ServiceResource Resource {
+        public IServiceResource Resource {
             get
             {
                 return resource;

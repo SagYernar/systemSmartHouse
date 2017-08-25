@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace SystemSmartHouse
     public interface IUser
     {
         string Password { get; set; }
-        void Autorization();
+        string SUPassword { get; set; }
 
     }
 }

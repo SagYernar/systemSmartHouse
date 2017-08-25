@@ -24,32 +24,35 @@ namespace SystemSmartHouse
 
         public void Handler()
         {
+            Console.Clear();
             char key;
             Console.WriteLine("Write Password:");
-            user.Password=Console.ReadLine();
-            for (;;)
+            string checkPassword = Console.ReadLine();
+            if (checkPassword == user.Password)
             {
-                Console.WriteLine("0-Automate house");
-                Console.WriteLine("1-Water");
-                Console.WriteLine("2-Electricity");
-                Console.WriteLine("3-Food");
-                key = Console.ReadKey().KeyChar;
-                if(key == '0') {
-                    Console.Clear();
-                    Console.WriteLine("0-Turn On");
-                    Console.WriteLine("1-Turn Off");
-                    if (key == '0')
-                    {
-                        if (!service.Controller.Signal)
-                        {
-                            service.Controller.Signal = true;
-                        }
+                for (;;)
+                {
+                    Console.WriteLine("0-Automate house");
+                    Console.WriteLine("1-Resource");
+                    key = Console.ReadKey().KeyChar;
+                    if (key == '0') {
+                        service.Controller.handler();
                     }
+                    else if (key == '1')
+                    {
+                        service.Resource.handler();
+                    }
+
+                    //serviceresource.CheckState();
                 }
-                //serviceresource.CheckState();
+            }
+            else
+            {
+                Console.WriteLine("Wrong password!");
+                Console.ReadLine();
+                Handler();
             }
         }
-        
     }
 
 
