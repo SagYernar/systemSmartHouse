@@ -4,19 +4,36 @@ namespace SystemSmartHouse
 {
     public class Electricity : IResource
     {
-        public bool CheckState()
+
+        private bool state;
+        public Electricity()
         {
-            throw new NotImplementedException();
+        }
+
+        public bool GetState
+        {
+            get { return state; }
+            set { state = value; }
+        }
+
+        public void CheckState()
+        {
+            if (!state)
+            {
+                Console.WriteLine("Voltage is exists!");
+            }
+            else
+                Console.WriteLine("Voltage isn't exists!");
         }
 
         public void DistributeResource()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Electricity successfully сirculated!");
         }
 
         public void MakeRequest()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not enough water! You must make request!");
         }
     }
 }

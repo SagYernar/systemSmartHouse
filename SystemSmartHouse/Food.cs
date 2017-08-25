@@ -4,19 +4,35 @@ namespace SystemSmartHouse
 {
     public class Food : IResource
     {
-        public bool CheckState()
+        private bool state;
+        public Food()
         {
-            throw new NotImplementedException();
+        }
+
+        public bool GetState
+        {
+            get { return state; }
+            set { state = value; }
+        }
+
+        public void CheckState()
+        {
+            if (!state)
+            {
+                Console.WriteLine("Enough food!");
+            }
+            else
+                Console.WriteLine("Not enough food!");
         }
 
         public void DistributeResource()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void MakeRequest()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not enough food!! You must make request!");
         }
     }
 }

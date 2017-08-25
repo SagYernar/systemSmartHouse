@@ -4,23 +4,36 @@ namespace SystemSmartHouse
 {
     public class Water:IResource
     {
+        private bool state;
         public Water()
         {
         }
 
-        public bool CheckState()
+        public bool GetState
         {
-            throw new NotImplementedException();
+            get { return state; }
+            set { state = value; }
+         }
+
+        public void CheckState()
+        {
+            if (!state) {
+                Console.WriteLine("Enough water!");
+            }
+            else
+                Console.WriteLine("Not enough water!");
         }
 
         public void DistributeResource()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Water successfully distributed!");
         }
 
         public void MakeRequest()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Not enough water! You must make request!");
         }
+
+  
     }
 }
