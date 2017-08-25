@@ -9,11 +9,12 @@ namespace SystemSmartHouse
     public class User : IUser
     {
         public string Password { get; set; }
+        public string SUPassword { get; set ; }
 
-        public User() { }
-        public void Autorization()
-        {
-            throw new NotImplementedException();
+        public User() {
+            Password = "Bill Gates";
+            SUPassword = "adminqwerty123";
         }
+  
     }
 }

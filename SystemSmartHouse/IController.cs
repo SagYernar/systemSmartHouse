@@ -1,8 +1,9 @@
 ﻿namespace SystemSmartHouse
 {
     public interface IController
+
     {
-        SignalType Signal { get; set; }
+        bool Signal { get; set; }
         
     }
 }
