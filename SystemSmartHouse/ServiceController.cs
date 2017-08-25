@@ -2,32 +2,41 @@
 
 namespace SystemSmartHouse
 {
-    public class ServiceController : GeneralService,IController
+    public class ServiceController :IController
     {
         public bool Signal { get; set; }
 
-        public void handler()
+        public void Handler()
         {
             char key;
-            Console.Clear();
-            Console.WriteLine("0-Turn On");
-            Console.WriteLine("1-Turn Off");
-            key = Console.ReadKey().KeyChar;
-            if (key == '0')
+
+            for (;;)
             {
-                if (!Signal)
+                Console.Clear();
+                Console.WriteLine("0-Turn On");
+                Console.WriteLine("1-Turn Off");
+                Console.WriteLine("2-Back");
+                key = Console.ReadKey().KeyChar;
+                if (key == '0')
                 {
-                    Signal = true;
+                    if (!Signal)
+                    {
+                        Signal = true;
+                    }
+                }
+                else if (key == '1')
+                {
+                    if (Signal)
+                    {
+                        Signal = false;
+                    }
+                }
+                else if (key == '2')
+                {
+                    Console.Clear();
+                    break;
                 }
             }
-            else if (key == '1')
-            {
-                if (Signal)
-                {
-                    Signal = false;
-                }
-            }
-            
         }
     }
 }

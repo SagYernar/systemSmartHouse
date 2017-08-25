@@ -30,17 +30,18 @@ namespace SystemSmartHouse
             string checkPassword = Console.ReadLine();
             if (checkPassword == user.Password)
             {
+                Console.Clear();
                 for (;;)
                 {
                     Console.WriteLine("0-Automate house");
                     Console.WriteLine("1-Resource");
                     key = Console.ReadKey().KeyChar;
                     if (key == '0') {
-                        service.Controller.handler();
+                        service.Controller.Handler();
                     }
                     else if (key == '1')
                     {
-                        service.Resource.handler();
+                        service.Resource.Handler();
                     }
 
                     //serviceresource.CheckState();

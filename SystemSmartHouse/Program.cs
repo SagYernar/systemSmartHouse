@@ -11,7 +11,7 @@ namespace SystemSmartHouse
         static void Main(string[] args)
         {
             IMenu menu = new Menu();
-
+            menu.Handler();
         }
     }
 }

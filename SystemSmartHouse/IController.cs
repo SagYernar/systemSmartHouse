@@ -4,6 +4,6 @@
 
     {
         bool Signal { get; set; }
-        void handler();
+        void Handler();
     }
 }
