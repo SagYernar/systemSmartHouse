@@ -2,7 +2,7 @@
 {
     public interface IResource
     {
-        bool CheckState();
+        void CheckState();
         void MakeRequest();
         void DistributeResource();
 
