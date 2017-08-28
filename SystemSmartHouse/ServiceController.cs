@@ -12,14 +12,14 @@ namespace SystemSmartHouse
 
         public void SendMessage(string obj)
         {
-            IPHostEntry host = Dns.GetHostEntry("205-STUD-13");
+            IPHostEntry host = Dns.GetHostEntry("208-04-pc");
             try
             {
                 // Создаем UdpClient
                 UdpClient udpClient = new UdpClient();
 
                 // Соединяемся с удаленным хостом
-                udpClient.Connect(host.AddressList[5], 5002);
+                udpClient.Connect(host.AddressList[2], 5001);
                 int tmp=0;
                 // Отправка простого сообщения
                 byte[] bytes = Encoding.UTF8.GetBytes(obj);
@@ -38,7 +38,7 @@ namespace SystemSmartHouse
 
         public void ReceiveMessage()
         {
-            UdpClient receivingUdpClient = new UdpClient(5001);
+            UdpClient receivingUdpClient = new UdpClient(5002);
 
             IPEndPoint RemoteIpEndPoint = null;
 
@@ -77,7 +77,7 @@ namespace SystemSmartHouse
                 key = Console.ReadKey().KeyChar;
                 if (key == '0')
                 {
-                    //Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
+                    Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
                     for (; ; )
                     {
                         Console.Clear();
@@ -89,16 +89,13 @@ namespace SystemSmartHouse
                         if (key == '0')
                         {
                             SendMessage("Turn On Light");
-
-                            
-                            //tRec.Start();
+                            tRec.Start();
 
                         }
                         else if (key == '1')
                         {
-                            SendMessage("Turn Off Light");
-                            
-                            //tRec.Start();
+                            SendMessage("Turn Off Light");                   
+                            tRec.Start();
                         }
                         else if (key == '2')
                         {
