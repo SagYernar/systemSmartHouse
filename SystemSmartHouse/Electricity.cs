@@ -8,6 +8,7 @@ namespace SystemSmartHouse
         private bool state;
         public Electricity()
         {
+            state = true;
         }
 
         public bool GetState

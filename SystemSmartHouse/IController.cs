@@ -6,6 +6,6 @@
         bool Signal { get; set; }
         void Handler();
         void SendMessage(string obj);
-        string ReceiveMessage();
+        void ReceiveMessage();
     }
 }

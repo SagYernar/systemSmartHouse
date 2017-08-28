@@ -7,6 +7,7 @@ namespace SystemSmartHouse
         private bool state;
         public Food()
         {
+            state = true;
         }
 
         public bool GetState

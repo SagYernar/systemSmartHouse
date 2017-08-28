@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Text;
 
 namespace SystemSmartHouse
@@ -11,19 +12,20 @@ namespace SystemSmartHouse
 
         public void SendMessage(string obj)
         {
-            IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
-
+            IPHostEntry host = Dns.GetHostEntry("205-STUD-13");
             try
             {
                 // Создаем UdpClient
                 UdpClient udpClient = new UdpClient();
 
                 // Соединяемся с удаленным хостом
-                udpClient.Connect(ipAddr, 8001);
-
+                udpClient.Connect(host.AddressList[5], 5002);
+                int tmp=0;
                 // Отправка простого сообщения
                 byte[] bytes = Encoding.UTF8.GetBytes(obj);
-                udpClient.Send(bytes, bytes.Length);
+                while (bytes.Length != tmp) {
+                    tmp = udpClient.Send(bytes, bytes.Length);
+                };
 
                 // Закрываем соединение
                 udpClient.Close();
@@ -34,26 +36,29 @@ namespace SystemSmartHouse
             }
         }
 
-        public string ReceiveMessage()
+        public void ReceiveMessage()
         {
-            UdpClient receiver = new UdpClient(8002); // UdpClient для получения данных
-            IPEndPoint remoteIp = null; // адрес входящего подключения
+            UdpClient receivingUdpClient = new UdpClient(5001);
+
+            IPEndPoint RemoteIpEndPoint = null;
+
             try
             {
+               
                 while (true)
                 {
-                    byte[] data = receiver.Receive(ref remoteIp); // получаем данные
-                    string message = Encoding.Unicode.GetString(data);
-                    return message;
+                    // Ожидание дейтаграммы
+                    byte[] receiveBytes = receivingUdpClient.Receive(
+                       ref RemoteIpEndPoint);
+
+                    // Преобразуем и отображаем данные
+                    string returnData = Encoding.UTF8.GetString(receiveBytes);
+                    Console.WriteLine(returnData);
                 }
             }
             catch (Exception ex)
             {
-                return ex.Message;
-            }
-            finally
-            {
-                receiver.Close();
+                Console.WriteLine( "Возникло исключение: " + ex.ToString() + "\n  " + ex.Message);
             }
         }
 
@@ -72,6 +77,7 @@ namespace SystemSmartHouse
                 key = Console.ReadKey().KeyChar;
                 if (key == '0')
                 {
+                    //Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
                     for (; ; )
                     {
                         Console.Clear();
@@ -79,15 +85,20 @@ namespace SystemSmartHouse
                         Console.WriteLine("1-Turn Off");
                         Console.WriteLine("2-Back");
                         key = Console.ReadKey().KeyChar;
+                        
                         if (key == '0')
                         {
                             SendMessage("Turn On Light");
-                            Console.WriteLine(ReceiveMessage());
+
+                            
+                            //tRec.Start();
+
                         }
                         else if (key == '1')
                         {
                             SendMessage("Turn Off Light");
-                            Console.WriteLine(ReceiveMessage());
+                            
+                            //tRec.Start();
                         }
                         else if (key == '2')
                         {
@@ -98,6 +109,7 @@ namespace SystemSmartHouse
                 }
                 else if (key == '1')
                 {
+                    //Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
                     for (; ; )
                     {
                         Console.Clear();
@@ -108,12 +120,14 @@ namespace SystemSmartHouse
                         if (key == '0')
                         {
                             SendMessage("Increase Humidity");
-                            Console.WriteLine(ReceiveMessage());
+                            
+                            //tRec.Start();
                         }
                         else if (key == '1')
                         {
                             SendMessage("Decrease Humidity");
-                            Console.WriteLine(ReceiveMessage());
+                            
+                            //tRec.Start();
                         }
                         else if (key == '2')
                         {

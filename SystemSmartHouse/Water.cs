@@ -7,6 +7,7 @@ namespace SystemSmartHouse
         private bool state;
         public Water()
         {
+            state = true;
         }
 
         public bool GetState
