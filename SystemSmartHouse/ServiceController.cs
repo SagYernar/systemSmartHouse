@@ -10,27 +10,12 @@ namespace SystemSmartHouse
     {
         public bool Signal { get; set; }
 
-        public void SendMessage(string obj)
+        public void SendMessage(string command)
         {
-            IPHostEntry host = Dns.GetHostEntry("208-04-pc");
             try
             {
-                // Создаем UdpClient
-                UdpClient udpClient = new UdpClient();
-
-                // Соединяемся с удаленным хостом
-                udpClient.Connect(host.AddressList[2], 5001);
-                int tmp=0;
-                // Отправка простого сообщения
-                byte[] bytes = Encoding.UTF8.GetBytes(obj);
-                while (bytes.Length != tmp) {
-                    tmp = udpClient.Send(bytes, bytes.Length);
-                };
-
-                // Закрываем соединение
-                udpClient.Close();
-            }
-            catch (Exception ex)
+                WebRequest request = WebRequest.Create("http://10.2.7.65"+command);
+            }            catch (WebException ex)
             {
                 Console.WriteLine(ex.ToString());
             }
@@ -77,7 +62,7 @@ namespace SystemSmartHouse
                 key = Console.ReadKey().KeyChar;
                 if (key == '0')
                 {
-                    Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
+                    //Thread tRec = new Thread(new ThreadStart(ReceiveMessage));
                     for (; ; )
                     {
                         Console.Clear();
@@ -88,14 +73,14 @@ namespace SystemSmartHouse
                         
                         if (key == '0')
                         {
-                            SendMessage("Turn On Light");
-                            tRec.Start();
+                            SendMessage("/$1");
+                            //tRec.Start();
 
                         }
                         else if (key == '1')
                         {
-                            SendMessage("Turn Off Light");                   
-                            tRec.Start();
+                            SendMessage("/$2");                   
+                            //tRec.Start();
                         }
                         else if (key == '2')
                         {
@@ -116,13 +101,13 @@ namespace SystemSmartHouse
                         key = Console.ReadKey().KeyChar;
                         if (key == '0')
                         {
-                            SendMessage("Increase Humidity");
+                            SendMessage("$1");
                             
                             //tRec.Start();
                         }
                         else if (key == '1')
                         {
-                            SendMessage("Decrease Humidity");
+                            SendMessage("$2");
                             
                             //tRec.Start();
                         }
