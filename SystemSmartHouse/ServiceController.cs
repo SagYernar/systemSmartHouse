@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Text;
 
@@ -14,38 +15,19 @@ namespace SystemSmartHouse
         {
             try
             {
-                WebRequest request = WebRequest.Create("http://10.2.7.65"+command);
-            }            catch (WebException ex)
+                using (var webClient = new WebClient())
+                {
+                    // Выполняем запрос по адресу и получаем ответ в виде строки
+                    var response = webClient.DownloadString("http://10.2.7.65" + command);
+                }
+
+            }
+            catch (WebException ex)
             {
                 Console.WriteLine(ex.ToString());
             }
         }
 
-        public void ReceiveMessage()
-        {
-            UdpClient receivingUdpClient = new UdpClient(5002);
-
-            IPEndPoint RemoteIpEndPoint = null;
-
-            try
-            {
-               
-                while (true)
-                {
-                    // Ожидание дейтаграммы
-                    byte[] receiveBytes = receivingUdpClient.Receive(
-                       ref RemoteIpEndPoint);
-
-                    // Преобразуем и отображаем данные
-                    string returnData = Encoding.UTF8.GetString(receiveBytes);
-                    Console.WriteLine(returnData);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine( "Возникло исключение: " + ex.ToString() + "\n  " + ex.Message);
-            }
-        }
 
         public void Handler()
         {
